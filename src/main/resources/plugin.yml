@@ -1,7 +1,7 @@
 name: ChestShop
 main: com.Acrobot.ChestShop.ChestShop
 version: '${bukkit.plugin.version}'
-author: Acrobot
+authors: [Acrobot, DevSrSouza]
 authors: ['https://github.com/ChestShop-authors/ChestShop-3/contributors']
 description: A chest shop for economy plugins.
 depend: [Vault]
