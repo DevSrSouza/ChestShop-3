@@ -1,13 +1,13 @@
 package com.Acrobot.ChestShop;
 
 import com.Acrobot.Breeze.Utils.BlockUtil;
-import com.Acrobot.Breeze.Utils.NameUtil;
 import com.Acrobot.ChestShop.Configuration.Properties;
 import com.Acrobot.ChestShop.Database.Account;
 import com.Acrobot.ChestShop.Events.Protection.ProtectBlockEvent;
 import com.Acrobot.ChestShop.Events.Protection.ProtectionCheckEvent;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.UUIDs.NameManager;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
@@ -78,7 +78,7 @@ public class Security {
                 continue;
             }
 
-            Account account = NameManager.getAccountFromShortName(sign.getLine(ChestShopSign.NAME_LINE));
+            Account account = NameManager.getAccountFromShortName(ChatColor.stripColor(sign.getLine(ChestShopSign.NAME_LINE)));
             if (account != null && !account.getUuid().equals(player.getUniqueId())) {
                 return true;
             }

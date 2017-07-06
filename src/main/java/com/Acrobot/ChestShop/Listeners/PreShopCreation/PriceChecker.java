@@ -1,6 +1,7 @@
 package com.Acrobot.ChestShop.Listeners.PreShopCreation;
 
 import com.Acrobot.Breeze.Utils.PriceUtil;
+import com.Acrobot.ChestShop.Configuration.SignConf;
 import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,17 +33,17 @@ public class PriceChecker implements Listener {
             return;
         }
 
-        if (line.indexOf('B') != line.lastIndexOf('B') || line.indexOf('S') != line.lastIndexOf('S')) {
+        if (line.indexOf(SignConf.getBuyChar()) != line.lastIndexOf(SignConf.getBuyChar()) || line.indexOf(SignConf.getSellChar()) != line.lastIndexOf(SignConf.getSellChar())) {
             event.setOutcome(INVALID_PRICE);
             return;
         }
 
         if (isPrice(part[0])) {
-            line = "B " + line;
+            line = SignConf.getBuyChar() + " " + line;
         }
 
         if (part.length > 1 && isPrice(part[1])) {
-            line += " S";
+            line += " " + SignConf.getSellChar();
         }
 
         if (line.length() > 15) {
@@ -62,7 +63,7 @@ public class PriceChecker implements Listener {
     }
 
     private static boolean isInvalid(String part) {
-        char characters[] = {'B', 'S'};
+        char characters[] = {SignConf.getBuyChar(), SignConf.getSellChar()};
 
         for (char character : characters) {
             if (part.contains(Character.toString(character))) {

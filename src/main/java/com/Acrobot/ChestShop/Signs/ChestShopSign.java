@@ -2,9 +2,11 @@ package com.Acrobot.ChestShop.Signs;
 
 import com.Acrobot.Breeze.Utils.BlockUtil;
 import com.Acrobot.ChestShop.Configuration.Properties;
+import com.Acrobot.ChestShop.Configuration.SignConf;
 import com.Acrobot.ChestShop.Containers.AdminInventory;
 import com.Acrobot.ChestShop.UUIDs.NameManager;
 import com.Acrobot.ChestShop.Utils.uBlock;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -27,7 +29,8 @@ public class ChestShopSign {
     public static final Pattern[] SHOP_SIGN_PATTERN = {
             Pattern.compile("^?[\\w -.]*$"),
             Pattern.compile("^[1-9][0-9]*$"),
-            Pattern.compile("(?i)^[\\d.bs(free) :]+$"),
+            Pattern.compile("(?i)^[\\d." + new String(new char[]{Character.toLowerCase(SignConf.getBuyChar())
+                    , Character.toLowerCase(SignConf.getSellChar())}) +"(free) :]+$"),
             Pattern.compile("^[\\w? #:-]+$")
     };
 
@@ -36,7 +39,7 @@ public class ChestShopSign {
     }
 
     public static boolean isAdminShop(String owner) {
-        return owner.replace(" ", "").equalsIgnoreCase(Properties.ADMIN_SHOP_NAME.replace(" ", ""));
+        return ChatColor.stripColor(owner).replace(" ", "").equalsIgnoreCase(Properties.ADMIN_SHOP_NAME.replace(" ", ""));
     }
 
     public static boolean isAdminShop(Sign sign) {
@@ -48,7 +51,7 @@ public class ChestShopSign {
     }
 
     public static boolean isValid(String[] line) {
-        return isValidPreparedSign(line) && (line[PRICE_LINE].toUpperCase().contains("B") || line[PRICE_LINE].toUpperCase().contains("S")) && !line[NAME_LINE].isEmpty();
+        return isValidPreparedSign(line) && (ChatColor.stripColor(line[PRICE_LINE]).toUpperCase().contains(SignConf.getBuyChar() + "") || ChatColor.stripColor(line[PRICE_LINE]).toUpperCase().contains(SignConf.getSellChar() + "")) && !line[NAME_LINE].isEmpty();
     }
 
     public static boolean isValid(Block sign) {
@@ -81,7 +84,7 @@ public class ChestShopSign {
         if (player == null) return false;
         if (sign == null) return true;
 
-        String name = sign.getLine(NAME_LINE);
+        String name = ChatColor.stripColor(sign.getLine(NAME_LINE));
         if (name == null || name.isEmpty()) return true;
 
         return NameManager.canUseName(player, name);
@@ -89,7 +92,8 @@ public class ChestShopSign {
 
     public static boolean isValidPreparedSign(String[] lines) {
         for (int i = 0; i < 4; i++) {
-            if (!SHOP_SIGN_PATTERN[i].matcher(lines[i]).matches()) {
+            String line = ChatColor.stripColor(lines[i]);
+            if (!SHOP_SIGN_PATTERN[i].matcher(line).matches()) {
                 return false;
             }
         }

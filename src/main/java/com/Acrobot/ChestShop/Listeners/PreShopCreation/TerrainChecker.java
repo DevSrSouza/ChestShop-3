@@ -7,6 +7,7 @@ import com.Acrobot.ChestShop.Permission;
 import com.Acrobot.ChestShop.Security;
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
 import com.Acrobot.ChestShop.Utils.uBlock;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class TerrainChecker implements Listener {
 
     @EventHandler
     public static void onPreShopCreation(PreShopCreationEvent event) {
-        String nameLine = event.getSignLine(NAME_LINE);
+        String nameLine = ChatColor.stripColor(event.getSignLine(NAME_LINE));
 
         if (ChestShopSign.isAdminShop(nameLine)) {
             return;

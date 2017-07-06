@@ -1,5 +1,8 @@
 package com.Acrobot.Breeze.Utils;
 
+import com.Acrobot.ChestShop.Configuration.SignConf;
+import org.bukkit.ChatColor;
+
 /**
  * @author Acrobot
  */
@@ -9,8 +12,8 @@ public class PriceUtil {
 
     public static final String FREE_TEXT = "free";
 
-    public static final char BUY_INDICATOR = 'b';
-    public static final char SELL_INDICATOR = 's';
+    public static final char BUY_INDICATOR = Character.toLowerCase(SignConf.getBuyChar());
+    public static final char SELL_INDICATOR = Character.toLowerCase(SignConf.getSellChar());
 
     /**
      * Gets the price from the text
@@ -20,6 +23,7 @@ public class PriceUtil {
      * @return price
      */
     public static double get(String text, char indicator) {
+        text = ChatColor.stripColor(text);
         String[] split = text.replace(" ", "").toLowerCase().split(":");
         String character = String.valueOf(indicator).toLowerCase();
 

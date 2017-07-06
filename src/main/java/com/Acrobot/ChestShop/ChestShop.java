@@ -7,6 +7,7 @@ import com.Acrobot.ChestShop.Commands.Toggle;
 import com.Acrobot.ChestShop.Commands.Version;
 import com.Acrobot.ChestShop.Configuration.Messages;
 import com.Acrobot.ChestShop.Configuration.Properties;
+import com.Acrobot.ChestShop.Configuration.SignConf;
 import com.Acrobot.ChestShop.Database.Migrations;
 import com.Acrobot.ChestShop.Listeners.Block.BlockPlace;
 import com.Acrobot.ChestShop.Listeners.Block.Break.ChestBreak;
@@ -89,6 +90,7 @@ public class ChestShop extends JavaPlugin {
     public void onEnable() {
         Configuration.pairFileAndClass(loadFile("config.yml"), Properties.class);
         Configuration.pairFileAndClass(loadFile("local.yml"), Messages.class);
+        Configuration.pairFileAndClass(loadFile("sign.yml"), SignConf.class);
 
         turnOffDatabaseLogging();
         handleMigrations();
@@ -294,6 +296,7 @@ public class ChestShop extends JavaPlugin {
         registerEvent(new PriceChecker());
         registerEvent(new QuantityChecker());
         registerEvent(new TerrainChecker());
+        registerEvent(new ColorAdd());
     }
 
     private void registerPostShopCreationEvents() {
